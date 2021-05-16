@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4251D4AC26510BD600436CE2 /* DistrictCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4251D4AB26510BD600436CE2 /* DistrictCycle.swift */; };
 		42766A3E264FE81300C59A41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42766A3D264FE81300C59A41 /* AppDelegate.swift */; };
 		42766A40264FE81300C59A41 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42766A3F264FE81300C59A41 /* SceneDelegate.swift */; };
 		42766A42264FE81300C59A41 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42766A41264FE81300C59A41 /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4251D4AB26510BD600436CE2 /* DistrictCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictCycle.swift; sourceTree = "<group>"; };
 		42766A3A264FE81300C59A41 /* GarBageCalendar2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GarBageCalendar2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42766A3D264FE81300C59A41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42766A3F264FE81300C59A41 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				42766A46264FE81600C59A41 /* Assets.xcassets */,
 				42766A48264FE81600C59A41 /* LaunchScreen.storyboard */,
 				42766A4B264FE81600C59A41 /* Info.plist */,
+				4251D4AB26510BD600436CE2 /* DistrictCycle.swift */,
 			);
 			path = GarBageCalendar2;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4251D4AC26510BD600436CE2 /* DistrictCycle.swift in Sources */,
 				42766A562650077400C59A41 /* CalendarHelper.swift in Sources */,
 				42766A42264FE81300C59A41 /* ViewController.swift in Sources */,
 				42766A3E264FE81300C59A41 /* AppDelegate.swift in Sources */,
