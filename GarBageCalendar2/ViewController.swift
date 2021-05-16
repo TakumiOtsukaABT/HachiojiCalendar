@@ -15,7 +15,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var selectedDate = Date()
     var totalSquares = [String]()
-    
+    var season:Int = 0
+    let calendarCycle = CalendarCycle()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let daysInMonth = CalendarHelper().daysInMonth(date: selectedDate)
         let firstDayOfMonth = CalendarHelper().firstOfMonth(date: selectedDate)
         let startingSpaces = CalendarHelper().weekDay(date: firstDayOfMonth)
+        self.season = CalendarHelper().getSeason(date: selectedDate)
         
         var count: Int = 1
         
@@ -60,21 +62,30 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calCell", for: indexPath) as! CalendarCell
-//        for i in cell.stackView.subviews{
+        for i in cell.stackView.subviews{
 //            print(i)
-//            cell.stackView.removeArrangedSubview(i)
-//        }
+            cell.stackView.removeArrangedSubview(i)
+        }
         cell.dayOfMonth.text = totalSquares[indexPath.item]
-        let imageView = UIImageView()
-        let imageView1 = UIImageView()
-
-        imageView.image = UIImage(named: "yuugai")
-        print(imageView.frame)
-        imageView.contentMode = .scaleAspectFit
-//        imageView.image = imageView.image?.resize(size: CGSize(width: 20, height: 20))
-        imageView1.image = UIImage(named: "gomibukuro_blue")
-        cell.stackView.addArrangedSubview(imageView)
-//        cell.stackView.addArrangedSubview(imageView1)
+        
+//
+        var imageView:[UIImageView] = []
+        
+//        imageView.contentMode = .scaleAspectFit
+//        print(totalSquares[indexPath.item])
+        
+        if totalSquares[indexPath.item] != "" {
+            for (index, i) in calendarCycle.district1[season][0][indexPath.item % 7].enumerated() {
+                let name = CalendarHelper().garbageTypeString(typeInt: GarbageType(rawValue: i)!)
+                if name != nil {
+                    let imageV = UIImageView()
+                    imageView.append(imageV)
+                    imageView[index].image = UIImage(named: name!)
+                    imageView[index].contentMode = .scaleAspectFit
+                    cell.stackView.addArrangedSubview(imageView[index])
+                }
+            }
+        }
 
         return cell
     }
