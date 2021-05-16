@@ -17,6 +17,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var totalSquares = [String]()
     var season:Int = 0
     let calendarCycle = CalendarCycle()
+    var cycleIndex:Int = 0
+    var calendar = Calendar.current
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +43,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let firstDayOfMonth = CalendarHelper().firstOfMonth(date: selectedDate)
         let startingSpaces = CalendarHelper().weekDay(date: firstDayOfMonth)
         self.season = CalendarHelper().getSeason(date: selectedDate)
+        let components = calendar.dateComponents([.month], from: selectedDate)
+        self.cycleIndex = calendarCycle.startIndex[components.month! - 1]
         
         var count: Int = 1
         
@@ -68,15 +73,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             i.removeFromSuperview()
         }
         cell.dayOfMonth.text = totalSquares[indexPath.item]
-        
-//
         var imageView:[UIImageView] = []
         
-//        imageView.contentMode = .scaleAspectFit
-//        print(totalSquares[indexPath.item])
+        print(cycleIndex)
         
         if totalSquares[indexPath.item] != "" {
-            for (index, i) in calendarCycle.district1[season][0][indexPath.item % 7].enumerated() {
+            for (index, i) in calendarCycle.district1[season][cycleIndex % 2][indexPath.item % 7].enumerated() {
                 let name = CalendarHelper().garbageTypeString(typeInt: GarbageType(rawValue: i)!)
                 if name != nil {
                     let imageV = UIImageView()
@@ -85,6 +87,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     imageView[index].contentMode = .scaleAspectFit
                     cell.stackView.addArrangedSubview(imageView[index])
                 }
+            } //for (index, i) in calendarCycle.district1[season][0 % 2][indexPath.item % 7].enumerated()
+            if indexPath.item % 7 == 0 {
+                cycleIndex += 1
             }
         }
 
