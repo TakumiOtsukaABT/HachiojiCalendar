@@ -65,6 +65,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         for i in cell.stackView.subviews{
 //            print(i)
             cell.stackView.removeArrangedSubview(i)
+            i.removeFromSuperview()
         }
         cell.dayOfMonth.text = totalSquares[indexPath.item]
         
