@@ -5,4 +5,11 @@
 //  Created by Takumi Otsuka on 2021/05/15.
 //
 
-import Foundation
+import UIKit
+
+class CalendarCell : UICollectionViewCell {
+    @IBOutlet weak var dayOfMonth:UILabel!
+    @IBOutlet weak var stackView: UIStackView!
+    
+    @IBOutlet weak var cellView: UIView!
+}
