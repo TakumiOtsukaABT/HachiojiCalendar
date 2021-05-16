@@ -32,6 +32,40 @@ class CalendarHelper
         return calendar.date(byAdding: .month, value: 0, to: date)!
     }
     
+    func getSeason(date:Date) -> Int {
+        let components = calendar.dateComponents([.month], from: date)
+        return (components.month!-1)/3
+    }
+    
+    func garbageTypeString(typeInt: GarbageType) -> String? {
+        switch typeInt {
+        case .non:
+            return nil
+        case .burn:
+            return "gomibukuro_blue"
+        case .nonburn:
+            return "gomibukuro_yellow"
+        case .bottle:
+            return "bottle"
+        case .plastic:
+            return "plastic"
+        case .bin:
+            return "bin"
+        case .can:
+            return "can"
+        case .box:
+            return "box"
+        case .cloth:
+            return "cloth"
+        case .yuugai:
+            return "yuugai"
+        case .newspaper:
+            return "newspaper"
+        case .magazine:
+            return "magazine"
+        }
+    }
+    
     func monthString(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "LLLL"
