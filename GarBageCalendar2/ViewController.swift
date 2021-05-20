@@ -13,6 +13,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var textField: UITextField!
+    
+    var pickerView = UIPickerView()
+    let list = ["地区1", "地区2"]
+    var district = 0
+
     var selectedDate = Date()
     var totalSquares = [String]()
     var season:Int = 0
@@ -20,9 +26,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var cycleIndex:Int = 0
     var calendar = Calendar.current
 
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        pickerDidLoad()
         // Do any additional setup after loading the view.
         setCellsView()
         setMonthView()
@@ -78,7 +85,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         print(cycleIndex)
         
         if totalSquares[indexPath.item] != "" {
-            for (index, i) in calendarCycle.district1[season][cycleIndex % 2][indexPath.item % 7].enumerated() {
+            for (index, i) in calendarCycle.district1[district][season][cycleIndex % 2][indexPath.item % 7].enumerated() {
                 let name = CalendarHelper().garbageTypeString(typeInt: GarbageType(rawValue: i)!)
                 if name != nil {
                     let imageV = UIImageView()
@@ -160,3 +167,47 @@ extension UIImage {
     }
 }
 
+extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    fileprivate func pickerDidLoad() {
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        let toolbar = UIToolbar(frame: CGRectMake(0, 0, 0, 35))
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ViewController.done))
+        let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(ViewController.cancel))
+        toolbar.setItems([cancelItem, doneItem], animated: true)
+        self.textField.inputView = pickerView
+        self.textField.inputAccessoryView = toolbar
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return list.count
+    }
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return list[row]
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.textField.text = list[row]
+        self.district = row
+        setMonthView()
+    }
+    
+    func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
+    
+    @objc func cancel() {
+        self.textField.text = ""
+        self.textField.endEditing(true)
+    }
+
+    @objc func done() {
+        self.textField.endEditing(true)
+    }
+}
