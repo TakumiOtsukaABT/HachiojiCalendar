@@ -16,7 +16,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var textField: UITextField!
     
     var pickerView = UIPickerView()
-    let list = ["地区1", "地区2"]
+    let list = ["地区1", "地区2","地区3"]
     var district = 0
 
     var selectedDate = Date()
