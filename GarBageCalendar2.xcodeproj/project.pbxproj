@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		422EE651265A9F2900735D0A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EE650265A9F2900735D0A /* SettingViewController.swift */; };
 		4251D4AC26510BD600436CE2 /* DistrictCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4251D4AB26510BD600436CE2 /* DistrictCycle.swift */; };
 		42766A3E264FE81300C59A41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42766A3D264FE81300C59A41 /* AppDelegate.swift */; };
 		42766A40264FE81300C59A41 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42766A3F264FE81300C59A41 /* SceneDelegate.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		422EE650265A9F2900735D0A /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		4251D4AB26510BD600436CE2 /* DistrictCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictCycle.swift; sourceTree = "<group>"; };
 		42766A3A264FE81300C59A41 /* GarBageCalendar2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GarBageCalendar2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42766A3D264FE81300C59A41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 			children = (
 				42766A3D264FE81300C59A41 /* AppDelegate.swift */,
 				42766A3F264FE81300C59A41 /* SceneDelegate.swift */,
+				422EE650265A9F2900735D0A /* SettingViewController.swift */,
 				42766A41264FE81300C59A41 /* ViewController.swift */,
 				42766A552650077400C59A41 /* CalendarHelper.swift */,
 				42766A52264FF30700C59A41 /* CalendarCell.swift */,
@@ -151,6 +154,7 @@
 				42766A42264FE81300C59A41 /* ViewController.swift in Sources */,
 				42766A3E264FE81300C59A41 /* AppDelegate.swift in Sources */,
 				42766A40264FE81300C59A41 /* SceneDelegate.swift in Sources */,
+				422EE651265A9F2900735D0A /* SettingViewController.swift in Sources */,
 				42766A53264FF30700C59A41 /* CalendarCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
