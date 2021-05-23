@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ViewController: UIViewController {
     
     @IBOutlet weak var monthLabel: UILabel!
     
@@ -15,6 +15,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBOutlet weak var dateDiscription: UILabel!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var settingButton: UIButton!
     
     var pickerView = UIPickerView()
     let list = ["地区1", "地区2","地区3"]
@@ -70,84 +71,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        totalSquares.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calCell", for: indexPath) as! CalendarCell
-        for i in cell.stackView.subviews{
-//            print(i)
-            cell.stackView.removeArrangedSubview(i)
-            i.removeFromSuperview()
-        }
-        
-        cell.garbage.removeAll()
-        
-        cell.dayOfMonth.text = totalSquares[indexPath.item]
-        var imageView:[UIImageView] = []
-        
-        print(cycleIndex)
-        
-        if totalSquares[indexPath.item] != "" {
-            for (index, i) in calendarCycle.district1[district][season][cycleIndex % 2][indexPath.item % 7].enumerated() {
-                let name = CalendarHelper().garbageTypeString(typeInt: GarbageType(rawValue: i)!)
-                if name != nil {
-                    let imageV = UIImageView()
-                    imageView.append(imageV)
-                    imageView[index].image = UIImage(named: name!)
-                    imageView[index].contentMode = .scaleAspectFit
-                    cell.stackView.addArrangedSubview(imageView[index])
-                    cell.garbage.append(i)
-                }
-            } //for (index, i) in calendarCycle.district1[season][0 % 2][indexPath.item % 7].enumerated()
-            if indexPath.item % 7 == 0 {
-                cycleIndex += 1
-            }
-        }
-        
-        let selectedBGView = UIView(frame: cell.frame)
-        selectedBGView.backgroundColor = .blue
-        cell.selectedBackgroundView = selectedBGView
-
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        print("Highlighted: \(indexPath)")
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        print("Unhighlighted: \(indexPath)")
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.cellForItem(at: indexPath)!.viewWithTag(3)?.backgroundColor = .yellow
-        let cell = collectionView.cellForItem(at: indexPath) as! CalendarCell
-        dateDiscription.text = ""
-        for i in cell.garbage {
-            dateDiscription.text! = dateDiscription.text! + "\n" + getGarbageTypeString(garbage: GarbageType(rawValue: i!)!)!
-        }
-        print("Selected: \(indexPath)")
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        collectionView.cellForItem(at: indexPath)!.viewWithTag(3)?.backgroundColor = .white
-        print("Deselected: \(indexPath)")
-    }
-
     @IBAction func previousMonth(_ sender: Any) {
         selectedDate = CalendarHelper().minusMonth(date: selectedDate)
         setMonthView()
@@ -156,6 +79,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func nextMonth(_ sender: Any) {
         selectedDate = CalendarHelper().plusMonth(date: selectedDate)
         setMonthView()
+        
+    }
+    @IBAction func gotoSettings() {
+        let vc = storyboard?.instantiateViewController(identifier: "Setting_VC") as! SettingViewController
+        present(vc, animated: true)
     }
     
     override open var shouldAutorotate: Bool {
@@ -167,9 +95,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         case .non:
             return nil
         case .burn:
-            return "可燃"
+            return "可燃ゴミ"
         case .nonburn:
-            return "不燃"
+            return "不燃ゴミ"
         case .bottle:
             return "ペットボトル"
         case .plastic:
@@ -239,6 +167,89 @@ extension UIImage {
 
         return resizedImage
     }
+}
+
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        totalSquares.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calCell", for: indexPath) as! CalendarCell
+        for i in cell.stackView.subviews{
+//            print(i)
+            cell.stackView.removeArrangedSubview(i)
+            i.removeFromSuperview()
+        }
+        
+        cell.garbage.removeAll()
+        
+        cell.dayOfMonth.text = totalSquares[indexPath.item]
+        var imageView:[UIImageView] = []
+        
+        cell.viewWithTag(3)?.backgroundColor = .white
+        dateDiscription.text = ""
+        
+        if totalSquares[indexPath.item] != "" {
+            for (index, i) in calendarCycle.district1[district][season][cycleIndex % 2][indexPath.item % 7].enumerated() {
+                let name = CalendarHelper().garbageTypeString(typeInt: GarbageType(rawValue: i)!)
+                if name != nil {
+                    let imageV = UIImageView()
+                    imageView.append(imageV)
+                    imageView[index].image = UIImage(named: name!)
+                    imageView[index].contentMode = .scaleAspectFit
+                    cell.stackView.addArrangedSubview(imageView[index])
+                    cell.garbage.append(i)
+                }
+            } //for (index, i) in calendarCycle.district1[season][0 % 2][indexPath.item % 7].enumerated()
+            if indexPath.item % 7 == 0 {
+                cycleIndex += 1
+            }
+        }
+        
+        let selectedBGView = UIView(frame: cell.frame)
+        selectedBGView.backgroundColor = .blue
+        cell.selectedBackgroundView = selectedBGView
+
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        print("Highlighted: \(indexPath)")
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        print("Unhighlighted: \(indexPath)")
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.cellForItem(at: indexPath)!.viewWithTag(3)?.backgroundColor = .yellow
+        let cell = collectionView.cellForItem(at: indexPath) as! CalendarCell
+        dateDiscription.text = ""
+        for i in cell.garbage {
+            dateDiscription.text! = dateDiscription.text! + "\n" + getGarbageTypeString(garbage: GarbageType(rawValue: i!)!)!
+        }
+        print("Selected: \(indexPath)")
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        collectionView.cellForItem(at: indexPath)!.viewWithTag(3)?.backgroundColor = .white
+        print("Deselected: \(indexPath)")
+    }
+
 }
 
 extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
