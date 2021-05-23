@@ -13,6 +13,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var dateDiscription: UILabel!
     @IBOutlet weak var textField: UITextField!
     
     var pickerView = UIPickerView()
@@ -45,6 +46,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func setMonthView() {
         totalSquares.removeAll()
+        
         
         let daysInMonth = CalendarHelper().daysInMonth(date: selectedDate)
         let firstDayOfMonth = CalendarHelper().firstOfMonth(date: selectedDate)
@@ -79,6 +81,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.stackView.removeArrangedSubview(i)
             i.removeFromSuperview()
         }
+        
+        cell.garbage.removeAll()
+        
         cell.dayOfMonth.text = totalSquares[indexPath.item]
         var imageView:[UIImageView] = []
         
@@ -93,14 +98,54 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     imageView[index].image = UIImage(named: name!)
                     imageView[index].contentMode = .scaleAspectFit
                     cell.stackView.addArrangedSubview(imageView[index])
+                    cell.garbage.append(i)
                 }
             } //for (index, i) in calendarCycle.district1[season][0 % 2][indexPath.item % 7].enumerated()
             if indexPath.item % 7 == 0 {
                 cycleIndex += 1
             }
         }
+        
+        let selectedBGView = UIView(frame: cell.frame)
+        selectedBGView.backgroundColor = .blue
+        cell.selectedBackgroundView = selectedBGView
 
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        print("Highlighted: \(indexPath)")
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        print("Unhighlighted: \(indexPath)")
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.cellForItem(at: indexPath)!.viewWithTag(3)?.backgroundColor = .yellow
+        let cell = collectionView.cellForItem(at: indexPath) as! CalendarCell
+        dateDiscription.text = ""
+        for i in cell.garbage {
+            dateDiscription.text! = dateDiscription.text! + "\n" + getGarbageTypeString(garbage: GarbageType(rawValue: i!)!)!
+        }
+        print("Selected: \(indexPath)")
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        collectionView.cellForItem(at: indexPath)!.viewWithTag(3)?.backgroundColor = .white
+        print("Deselected: \(indexPath)")
     }
 
     @IBAction func previousMonth(_ sender: Any) {
@@ -115,6 +160,35 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override open var shouldAutorotate: Bool {
         return false
+    }
+    
+    private func getGarbageTypeString(garbage: GarbageType) -> String? {
+        switch garbage {
+        case .non:
+            return nil
+        case .burn:
+            return "可燃"
+        case .nonburn:
+            return "不燃"
+        case .bottle:
+            return "ペットボトル"
+        case .plastic:
+            return "プラスチック"
+        case .bin:
+            return "ビン"
+        case .can:
+            return "缶"
+        case .box:
+            return "段ボール"
+        case .cloth:
+            return "布"
+        case .yuugai:
+            return "有害ゴミ（スプレー缶など）"
+        case .newspaper:
+            return "新聞紙"
+        case .magazine:
+            return "雑誌・雑紙・紙パック"
+        }
     }
     
 //    private func initImageView(indexPath:IndexPath) {
