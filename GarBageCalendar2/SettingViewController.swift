@@ -8,10 +8,13 @@
 import UIKit
 
 class SettingViewController: UIViewController {
+    
+    let userDefaults = UserDefaults.standard
+
 
     let cellDescription: [String] = ["通知日", "通知時間"]
     let date: [String] = ["前日", "当日"]
-    let hour: [Int] = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+    let hour: [String] = [ "0時", "1時", "2時", "3時", "4時", "5時", "6時", "7時", "8時", "9時", "10時", "11時", "12時", "13時", "14時", "15時", "16時", "17時", "18時", "19時", "20時", "21時", "22時", "23時"]
     @IBOutlet weak var tableview: UITableView!
     
     //ピッカービュー
@@ -26,6 +29,7 @@ class SettingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        userDefaults.register(defaults: ["DataStore": "default"])
         // Do any additional setup after loading the view.
         
         let width = self.view.frame.width
@@ -37,6 +41,7 @@ class SettingViewController: UIViewController {
                                                width:width,height:pickerViewHeight))
         pickerView.dataSource = self
         pickerView.delegate = self
+        pickerView.selectRow(2, inComponent: 0, animated: true)
         self.view.addSubview(pickerView)
         
         //pickerToolbar
@@ -74,13 +79,42 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "myCell")
+        var key = ""
         cell.textLabel?.text = self.cellDescription[indexPath.row]
-        cell.detailTextLabel?.text = ""
+        if indexPath.row == 0 {
+            key = "todayOrNot"
+        } else if indexPath.row == 1{
+            key = "hour"
+        }
+        cell.detailTextLabel?.text = userDefaults.string(forKey: key)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.pickerIndexPath = indexPath
+        let selectedPick = tableView.cellForRow(at: indexPath)?.detailTextLabel?.text
+        var index1:Int = 0
+        
+        if indexPath.row == 0 {
+            for (index, i) in date.enumerated() {
+                if i == selectedPick {
+                    index1 = index
+                    print(index1)
+                    break
+                }
+            }
+        } else if indexPath.row == 1 {
+            for (index, i) in hour.enumerated() {
+                if i == selectedPick {
+                    index1 = index
+                    print(index1)
+                    break
+                }
+            }
+        }
+        
+        self.pickerView.selectRow(index1,inComponent:0,animated:false)
+            
         
         //ピッカービューをリロード
         pickerView.reloadAllComponents()
@@ -91,8 +125,9 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             self.pickerView.frame = CGRect(x:0,y:self.view.frame.height - self.pickerViewHeight,
                                            width:self.view.frame.width,height:self.pickerViewHeight)
         }
-        // タップされたセルの行番号を出力
-        print("\(indexPath.row)番目の行が選択されました。")
+        self.pickerView.selectRow(index1,inComponent:0,animated:false)
+
+
     }
     
     
@@ -106,19 +141,54 @@ extension SettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 10
+        if(pickerIndexPath != nil){
+            switch (pickerIndexPath.row){
+            case 0:
+                return date.count
+            case 1:
+                return hour.count
+            default:
+                return 0
+            }
+        }else{
+            return 0
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String? {
-        
-        return String(hour[row])
+        if(pickerIndexPath != nil){
+            switch (pickerIndexPath.row){
+            case 0:
+                return date[row]
+            case 1:
+                return hour[row]
+            default:
+                return ""
+            }
+        } else {
+            return ""
+        }
     }
     
     // UIPickerViewのRowが選択された時の挙動
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let cell = tableview.cellForRow(at:pickerIndexPath)
-        cell?.detailTextLabel?.text = String(hour[row])
-        // 処理
+        var newLabel = ""
+        var key = ""
+        if(pickerIndexPath != nil){
+            switch (pickerIndexPath.row){
+            case 0:
+                key = "todayOrNot"
+                newLabel = date[row]
+            case 1:
+                key = "hour"
+                newLabel = hour[row]
+            default:
+                break
+            }
+        }
+        cell?.detailTextLabel?.text = newLabel
+        userDefaults.set(newLabel, forKey: key)
     }
     
     @objc func doneTapped() {

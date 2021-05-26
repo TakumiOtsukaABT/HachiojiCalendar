@@ -20,6 +20,9 @@ class ViewController: UIViewController {
     var pickerView = UIPickerView()
     let list = ["地区1", "地区2","地区3"]
     var district = 0
+    
+    let userDefaults = UserDefaults.standard
+
 
     var selectedDate = Date()
     var totalSquares = [String]()
@@ -35,6 +38,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         setCellsView()
         setMonthView()
+        self.district = userDefaults.integer(forKey: "rowInt")
+        self.textField.text = list[district]
     }
     
     func setCellsView() {
@@ -280,6 +285,7 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.textField.text = list[row]
         self.district = row
+        userDefaults.setValue(row, forKey: "rowInt")
         setMonthView()
     }
     
