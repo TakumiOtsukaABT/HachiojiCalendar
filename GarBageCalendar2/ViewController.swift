@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class ViewController: UIViewController {
     
@@ -30,6 +31,7 @@ class ViewController: UIViewController {
     let calendarCycle = CalendarCycle()
     var cycleIndex:Int = 0
     var calendar = Calendar.current
+    var todaycell = CalendarCell()
 
         
     override func viewDidLoad() {
@@ -40,6 +42,42 @@ class ViewController: UIViewController {
         setMonthView()
         self.district = userDefaults.integer(forKey: "rowInt")
         self.textField.text = list[district]
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert]) {
+            (granted, error) in
+        }
+                
+        let content = UNMutableNotificationContent()
+        content.title = "Hey Ya"
+        print(todaycell.garbage,"tttt")
+        if todaycell.garbage.isEmpty {
+//            content.body = "it is \(todaycell.garbage[0]) day next"
+        } else {
+            content.body = "there are none"
+        }
+        
+        let date = Date()
+        
+        let dateComponent = DateComponents(second: 10)
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
+        
+        let nextTriggerDate = trigger.nextTriggerDate()
+        
+        let uuid = UUID().uuidString
+        
+        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
+        
+        center.add(request){
+            (error) in
+        }
+        
+        
+        
     }
     
     func setCellsView() {
@@ -216,6 +254,14 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let selectedBGView = UIView(frame: cell.frame)
         selectedBGView.backgroundColor = .blue
         cell.selectedBackgroundView = selectedBGView
+        
+        if CalendarHelper().getOnlyMonth(date: self.selectedDate) == CalendarHelper().getOnlyMonth(date: Date()) {
+            if CalendarHelper().getOnlyDate(date: Date()) == totalSquares[indexPath.item] {
+                self.todaycell = cell
+                self.todaycell.garbage[0] = self.todaycell.garbage[0]
+                print(todaycell.garbage)
+            }
+        }
 
         return cell
     }
@@ -245,7 +291,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.cellForItem(at: indexPath) as! CalendarCell
         dateDiscription.text = ""
         for i in cell.garbage {
-            dateDiscription.text! = dateDiscription.text! + "\n" + getGarbageTypeString(garbage: GarbageType(rawValue: i!)!)!
+            dateDiscription.text! = dateDiscription.text! + "\n" + getGarbageTypeString(garbage: GarbageType(rawValue: i)!)!
         }
         print("Selected: \(indexPath)")
     }

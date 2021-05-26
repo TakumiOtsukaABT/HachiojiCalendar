@@ -78,6 +78,18 @@ class CalendarHelper
         return dateFormatter.string(from: date) + "月"
     }
     
+    func getOnlyMonth(date: Date) -> Int {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM"
+        return Int(dateFormatter.string(from: date))!
+    }
+    
+    func getOnlyDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd"
+        return dateFormatter.string(from: date)
+    }
+    
     func yearString(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy"

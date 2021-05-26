@@ -12,5 +12,5 @@ class CalendarCell : UICollectionViewCell {
     @IBOutlet weak var stackView: UIStackView!
     
     @IBOutlet weak var cellView: UIView!
-    var garbage: [Int?] = []
+    var garbage: [Int] = []
 }
