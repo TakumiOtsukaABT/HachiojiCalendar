@@ -19,6 +19,12 @@ class SettingViewController: UIViewController {
     
     var scheduleForThisMonth = [DateWithSchedule]()
     
+    
+    
+    let maxNotification = 30
+    
+    
+    
     //ピッカービュー
     private var pickerView:UIPickerView!
     private let pickerViewHeight:CGFloat = 160
@@ -32,8 +38,6 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         userDefaults.register(defaults: ["DataStore": "default"])
-        
-        print(scheduleForThisMonth)
         // Do any additional setup after loading the view.
         
         let width = self.view.frame.width
@@ -59,30 +63,67 @@ class SettingViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         self.scheduleForThisMonth = CalendarHelper.sched
-        print(self.scheduleForThisMonth)
     }
     
     @IBAction func closeButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
-        print("pressed")
-        print(scheduleForThisMonth)
-
-
     }
     
     @IBAction func updateNotification(_ sender: Any) {
-        print("pressed")
+        var hasEmptyField = false
+        for i in tableview.visibleCells{
+            if i.detailTextLabel?.text == nil {
+                hasEmptyField = true
+            }
+        }
+        
+        if !hasEmptyField {
+            
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.alert]) {
+                (granted, error) in
+            }
+            
+            for i in 0...maxNotification {
+                
+            }
+            
+            for (index, i) in self.scheduleForThisMonth.enumerated() {
+                //content
+                let content = UNMutableNotificationContent()
+                var garbageString = ""
+                for (indexj, j) in i.garbage.enumerated() {
+                    garbageString += CalendarHelper().getGarbageTypeString(garbage: GarbageType(rawValue: j)!)!
+                    if indexj < i.garbage.count-1 {
+                        garbageString += "と"
+                    }
+                }
+                content.title = "ゴミ出しの時間です。"
+                content.body =  garbageString + "の日です"
+                print(content.body)
+                //content
+                
+            }
+            
+            
+            
+            
+//            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
+//
+//            let uuid = "monthly"
+//
+//            let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
+//
+//            center.add(request){
+//                (error) in
+//            }
+            
+            
+            
+            
+            
+        }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
