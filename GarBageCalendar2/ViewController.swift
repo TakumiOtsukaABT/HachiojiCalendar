@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     
     let userDefaults = UserDefaults.standard
 
+    var schedulesThisMonth = [DateWithSchedule]()
 
     var selectedDate = Date()
     var totalSquares = [String]()
@@ -52,21 +53,14 @@ class ViewController: UIViewController {
         }
                 
         let content = UNMutableNotificationContent()
-        content.title = "Hey Ya"
-        print(todaycell.garbage,"tttt")
-        if todaycell.garbage.isEmpty {
-//            content.body = "it is \(todaycell.garbage[0]) day next"
-        } else {
-            content.body = "there are none"
-        }
+        content.title = "ゴミ出しお疲れ様でした。"
+        content.body = "今月も通知しましょうか？アプリを開いて通知の設定をお願いします"
         
-        let date = Date()
         
-        let dateComponent = DateComponents(second: 10)
+        let dateComponent = DateComponents(day: 1)
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
         
-        let nextTriggerDate = trigger.nextTriggerDate()
         
         let uuid = UUID().uuidString
         
@@ -75,9 +69,6 @@ class ViewController: UIViewController {
         center.add(request){
             (error) in
         }
-        
-        
-        
     }
     
     func setCellsView() {
@@ -110,6 +101,7 @@ class ViewController: UIViewController {
             count += 1
         }
         monthLabel.text = CalendarHelper().monthJapaneseString(date: selectedDate)
+        self.schedulesThisMonth.removeAll()
         collectionView.reloadData()
         
     }
@@ -255,11 +247,16 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         selectedBGView.backgroundColor = .blue
         cell.selectedBackgroundView = selectedBGView
         
+        if !cell.garbage.isEmpty {
+            let month = CalendarHelper().getOnlyMonth(date: selectedDate)
+            let day = Int(totalSquares[indexPath.item])
+            let dateComponent = DateComponents(month:month, day:day)
+            let withSchedule = DateWithSchedule(dateComponent: dateComponent ,garbage: cell.garbage)
+            self.schedulesThisMonth.append(withSchedule)
+        }
+        
         if CalendarHelper().getOnlyMonth(date: self.selectedDate) == CalendarHelper().getOnlyMonth(date: Date()) {
             if CalendarHelper().getOnlyDate(date: Date()) == totalSquares[indexPath.item] {
-                self.todaycell = cell
-                self.todaycell.garbage[0] = self.todaycell.garbage[0]
-                print(todaycell.garbage)
             }
         }
 
@@ -279,11 +276,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        print("Highlighted: \(indexPath)")
     }
 
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        print("Unhighlighted: \(indexPath)")
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -293,12 +288,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         for i in cell.garbage {
             dateDiscription.text! = dateDiscription.text! + "\n" + getGarbageTypeString(garbage: GarbageType(rawValue: i)!)!
         }
-        print("Selected: \(indexPath)")
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         collectionView.cellForItem(at: indexPath)!.viewWithTag(3)?.backgroundColor = .white
-        print("Deselected: \(indexPath)")
     }
 
 }
@@ -346,5 +339,15 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
     @objc func done() {
         self.textField.endEditing(true)
+    }
+}
+
+class DateWithSchedule {
+    var dateComponents:DateComponents
+    var garbage:[Int]
+    
+    init(dateComponent:DateComponents, garbage: [Int]) {
+        self.dateComponents = dateComponent
+        self.garbage = garbage
     }
 }

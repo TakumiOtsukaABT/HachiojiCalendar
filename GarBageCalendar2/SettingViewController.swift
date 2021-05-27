@@ -55,9 +55,13 @@ class SettingViewController: UIViewController {
     
     @IBAction func closeButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+        print("pressed")
 
     }
     
+    @IBAction func updateNotification(_ sender: Any) {
+        print("pressed")
+    }
     /*
     // MARK: - Navigation
 
