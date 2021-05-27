@@ -62,8 +62,7 @@ class ViewController: UIViewController {
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
         
-        
-        let uuid = UUID().uuidString
+        let uuid = "monthly"
         
         let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
         
@@ -127,34 +126,6 @@ class ViewController: UIViewController {
         return false
     }
     
-    private func getGarbageTypeString(garbage: GarbageType) -> String? {
-        switch garbage {
-        case .non:
-            return nil
-        case .burn:
-            return "可燃ゴミ"
-        case .nonburn:
-            return "不燃ゴミ"
-        case .bottle:
-            return "ペットボトル"
-        case .plastic:
-            return "プラスチック"
-        case .bin:
-            return "ビン"
-        case .can:
-            return "缶"
-        case .box:
-            return "段ボール"
-        case .cloth:
-            return "布"
-        case .yuugai:
-            return "有害ゴミ（スプレー缶など）"
-        case .newspaper:
-            return "新聞紙"
-        case .magazine:
-            return "雑誌・雑紙・紙パック"
-        }
-    }
     
 //    private func initImageView(indexPath:IndexPath) {
 //        // UIImage インスタンスの生成
@@ -288,7 +259,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.cellForItem(at: indexPath) as! CalendarCell
         dateDiscription.text = ""
         for i in cell.garbage {
-            dateDiscription.text! = dateDiscription.text! + "\n" + getGarbageTypeString(garbage: GarbageType(rawValue: i)!)!
+            dateDiscription.text! = dateDiscription.text! + "\n" + CalendarHelper().getGarbageTypeString(garbage: GarbageType(rawValue: i)!)!
         }
     }
 

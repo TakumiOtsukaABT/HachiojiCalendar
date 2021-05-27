@@ -69,6 +69,35 @@ class CalendarHelper
         }
     }
     
+    func getGarbageTypeString(garbage: GarbageType) -> String? {
+        switch garbage {
+        case .non:
+            return nil
+        case .burn:
+            return "可燃ゴミ"
+        case .nonburn:
+            return "不燃ゴミ"
+        case .bottle:
+            return "ペットボトル"
+        case .plastic:
+            return "プラスチック"
+        case .bin:
+            return "ビン"
+        case .can:
+            return "缶"
+        case .box:
+            return "段ボール"
+        case .cloth:
+            return "布"
+        case .yuugai:
+            return "有害ゴミ（スプレー缶など）"
+        case .newspaper:
+            return "新聞紙"
+        case .magazine:
+            return "雑誌・雑紙・紙パック"
+        }
+    }
+    
     func monthString(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "LLLL"
