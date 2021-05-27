@@ -24,7 +24,8 @@ class ViewController: UIViewController {
     
     let userDefaults = UserDefaults.standard
 
-    var schedulesThisMonth = [DateWithSchedule]()
+    public var schedulesThisMonth = [DateWithSchedule]()
+    var completionHandler:()
 
     var selectedDate = Date()
     var totalSquares = [String]()
@@ -119,6 +120,7 @@ class ViewController: UIViewController {
     @IBAction func gotoSettings() {
         let vc = storyboard?.instantiateViewController(identifier: "Setting_VC") as! SettingViewController
         present(vc, animated: true)
+        CalendarHelper.sched = self.schedulesThisMonth
     }
     
     override open var shouldAutorotate: Bool {

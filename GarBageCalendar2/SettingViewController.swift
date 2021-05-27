@@ -17,6 +17,8 @@ class SettingViewController: UIViewController {
     let hour: [String] = [ "0時", "1時", "2時", "3時", "4時", "5時", "6時", "7時", "8時", "9時", "10時", "11時", "12時", "13時", "14時", "15時", "16時", "17時", "18時", "19時", "20時", "21時", "22時", "23時"]
     @IBOutlet weak var tableview: UITableView!
     
+    var scheduleForThisMonth = [DateWithSchedule]()
+    
     //ピッカービュー
     private var pickerView:UIPickerView!
     private let pickerViewHeight:CGFloat = 160
@@ -30,6 +32,8 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         userDefaults.register(defaults: ["DataStore": "default"])
+        
+        print(scheduleForThisMonth)
         // Do any additional setup after loading the view.
         
         let width = self.view.frame.width
@@ -53,9 +57,16 @@ class SettingViewController: UIViewController {
 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.scheduleForThisMonth = CalendarHelper.sched
+        print(self.scheduleForThisMonth)
+    }
+    
     @IBAction func closeButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
         print("pressed")
+        print(scheduleForThisMonth)
+
 
     }
     

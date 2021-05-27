@@ -10,6 +10,9 @@ import UIKit
 
 class CalendarHelper
 {
+    
+    static var sched = [DateWithSchedule]()
+    
     var calendar = Calendar.current
     
     func plusMonth(date: Date) -> Date {
