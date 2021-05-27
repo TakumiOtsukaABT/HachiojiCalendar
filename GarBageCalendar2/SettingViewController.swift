@@ -18,6 +18,7 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var tableview: UITableView!
     
     var scheduleForThisMonth = [DateWithSchedule]()
+    var timing = 0
     
     
     
@@ -49,7 +50,6 @@ class SettingViewController: UIViewController {
                                                width:width,height:pickerViewHeight))
         pickerView.dataSource = self
         pickerView.delegate = self
-        pickerView.selectRow(2, inComponent: 0, animated: true)
         self.view.addSubview(pickerView)
         
         //pickerToolbar
@@ -85,7 +85,7 @@ class SettingViewController: UIViewController {
             }
             
             for i in 0...maxNotification {
-                
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [String(i)])
             }
             
             for (index, i) in self.scheduleForThisMonth.enumerated() {
@@ -103,12 +103,43 @@ class SettingViewController: UIViewController {
                 print(content.body)
                 //content
                 
+                //trigger
+                if tableview.cellForRow(at: IndexPath(row: 0, section: 0))?.detailTextLabel?.text == "前日"{
+                    timing = -1
+                } else if tableview.cellForRow(at: IndexPath(row: 1, section: 0))?.detailTextLabel?.text == "前日" {
+                    timing = 0
+                }
+                print("timing " ,timing)
+                var dateComponent = i.dateComponents
+                print(dateComponent)
+                let tempDate = componentToDate(dateComponent: dateComponent)
+                let nextDate = Calendar.current.date(byAdding: .day, value: timing, to: tempDate!)
+                dateComponent = dateToComponent(date: nextDate!)
+                let whatTime = Int((tableview.cellForRow(at: IndexPath(row: 1, section: 0))?.detailTextLabel?.text)!.dropLast())
+                print ("time", whatTime)
+                dateComponent.setValue(whatTime, for: .hour)
+                dateComponent.setValue(2021, for: .year)
+                print(dateComponent)
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: false)
+                //trigger
+                
+                //uuid
+                let uuid = String(index)
+                //uuid
+                
+                //request
+                let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
+                //request
+                
+                center.add(request){
+                    (error) in
+                }
+                
             }
             
             
             
             
-//            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
 //
 //            let uuid = "monthly"
 //
@@ -123,6 +154,16 @@ class SettingViewController: UIViewController {
             
             
         }
+    }
+    private func dateToComponent(date: Date) -> DateComponents{
+        let components = Calendar.current.dateComponents(in: TimeZone.current, from: date)
+        return components
+    }
+    
+    private func componentToDate(dateComponent: DateComponents) -> Date? {
+        var tempComponent = dateComponent
+        tempComponent.calendar = Calendar.current
+        return tempComponent.date
     }
 }
 
