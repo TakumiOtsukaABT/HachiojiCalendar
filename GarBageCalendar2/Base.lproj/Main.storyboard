@@ -340,6 +340,12 @@
                                                 <action selector="closeButton:" destination="CoX-Xu-UYM" id="fXs-y7-OQl"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="今月の通知を設定" id="W0d-Pn-hnU">
+                                            <color key="tintColor" name="AccentColor"/>
+                                            <connections>
+                                                <action selector="updateNotification:" destination="CoX-Xu-UYM" id="pOZ-Lq-06j"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
