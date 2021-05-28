@@ -117,10 +117,11 @@ class SettingViewController: UIViewController {
                 dateComponent = dateToComponent(date: nextDate!)
                 let whatTime = Int((tableview.cellForRow(at: IndexPath(row: 1, section: 0))?.detailTextLabel?.text)!.dropLast())
                 print ("time", whatTime)
-                dateComponent.setValue(whatTime, for: .hour)
-                dateComponent.setValue(2021, for: .year)
+                dateComponent.setValue(whatTime!, for: .hour)
                 print(dateComponent)
-                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: false)
+                let dateComponent2 = DateComponents(month:dateComponent.month,day: dateComponent.day,hour: dateComponent.hour)
+                print("ttt",dateComponent2)
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent2, repeats: false)
                 //trigger
                 
                 //uuid
