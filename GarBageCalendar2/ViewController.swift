@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class ViewController: UIViewController {
     
@@ -23,6 +24,8 @@ class ViewController: UIViewController {
     
     let userDefaults = UserDefaults.standard
 
+    public var schedulesThisMonth = [DateWithSchedule]()
+    var completionHandler:()
 
     var selectedDate = Date()
     var totalSquares = [String]()
@@ -30,6 +33,7 @@ class ViewController: UIViewController {
     let calendarCycle = CalendarCycle()
     var cycleIndex:Int = 0
     var calendar = Calendar.current
+    var todaycell = CalendarCell()
 
         
     override func viewDidLoad() {
@@ -40,6 +44,31 @@ class ViewController: UIViewController {
         setMonthView()
         self.district = userDefaults.integer(forKey: "rowInt")
         self.textField.text = list[district]
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert]) {
+            (granted, error) in
+        }
+                
+        let content = UNMutableNotificationContent()
+        content.title = "ゴミ出しお疲れ様でした。"
+        content.body = "今月も通知しましょうか？アプリを開いて通知の設定をお願いします"
+        
+        
+        let dateComponent = DateComponents(day: 1)
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
+        
+        let uuid = "monthly"
+        
+        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
+        
+        center.add(request){
+            (error) in
+        }
     }
     
     func setCellsView() {
@@ -72,6 +101,7 @@ class ViewController: UIViewController {
             count += 1
         }
         monthLabel.text = CalendarHelper().monthJapaneseString(date: selectedDate)
+        self.schedulesThisMonth.removeAll()
         collectionView.reloadData()
         
     }
@@ -89,40 +119,13 @@ class ViewController: UIViewController {
     @IBAction func gotoSettings() {
         let vc = storyboard?.instantiateViewController(identifier: "Setting_VC") as! SettingViewController
         present(vc, animated: true)
+        CalendarHelper.sched = self.schedulesThisMonth
     }
     
     override open var shouldAutorotate: Bool {
         return false
     }
     
-    private func getGarbageTypeString(garbage: GarbageType) -> String? {
-        switch garbage {
-        case .non:
-            return nil
-        case .burn:
-            return "可燃ゴミ"
-        case .nonburn:
-            return "不燃ゴミ"
-        case .bottle:
-            return "ペットボトル"
-        case .plastic:
-            return "プラスチック"
-        case .bin:
-            return "ビン"
-        case .can:
-            return "缶"
-        case .box:
-            return "段ボール"
-        case .cloth:
-            return "布"
-        case .yuugai:
-            return "有害ゴミ（スプレー缶など）"
-        case .newspaper:
-            return "新聞紙"
-        case .magazine:
-            return "雑誌・雑紙・紙パック"
-        }
-    }
     
 //    private func initImageView(indexPath:IndexPath) {
 //        // UIImage インスタンスの生成
@@ -216,6 +219,19 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let selectedBGView = UIView(frame: cell.frame)
         selectedBGView.backgroundColor = .blue
         cell.selectedBackgroundView = selectedBGView
+        
+        if !cell.garbage.isEmpty {
+            let month = CalendarHelper().getOnlyMonth(date: selectedDate)
+            let day = Int(totalSquares[indexPath.item])
+            let dateComponent = DateComponents(month:month, day:day)
+            let withSchedule = DateWithSchedule(dateComponent: dateComponent ,garbage: cell.garbage)
+            self.schedulesThisMonth.append(withSchedule)
+        }
+        
+        if CalendarHelper().getOnlyMonth(date: self.selectedDate) == CalendarHelper().getOnlyMonth(date: Date()) {
+            if CalendarHelper().getOnlyDate(date: Date()) == totalSquares[indexPath.item] {
+            }
+        }
 
         return cell
     }
@@ -233,11 +249,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        print("Highlighted: \(indexPath)")
     }
 
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        print("Unhighlighted: \(indexPath)")
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -245,14 +259,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.cellForItem(at: indexPath) as! CalendarCell
         dateDiscription.text = ""
         for i in cell.garbage {
-            dateDiscription.text! = dateDiscription.text! + "\n" + getGarbageTypeString(garbage: GarbageType(rawValue: i!)!)!
+            dateDiscription.text! = dateDiscription.text! + "\n" + CalendarHelper().getGarbageTypeString(garbage: GarbageType(rawValue: i)!)!
         }
-        print("Selected: \(indexPath)")
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         collectionView.cellForItem(at: indexPath)!.viewWithTag(3)?.backgroundColor = .white
-        print("Deselected: \(indexPath)")
     }
 
 }
@@ -300,5 +312,15 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
     @objc func done() {
         self.textField.endEditing(true)
+    }
+}
+
+class DateWithSchedule {
+    var dateComponents:DateComponents
+    var garbage:[Int]
+    
+    init(dateComponent:DateComponents, garbage: [Int]) {
+        self.dateComponents = dateComponent
+        self.garbage = garbage
     }
 }

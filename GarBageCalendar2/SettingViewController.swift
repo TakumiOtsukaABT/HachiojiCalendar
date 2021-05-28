@@ -17,6 +17,15 @@ class SettingViewController: UIViewController {
     let hour: [String] = [ "0時", "1時", "2時", "3時", "4時", "5時", "6時", "7時", "8時", "9時", "10時", "11時", "12時", "13時", "14時", "15時", "16時", "17時", "18時", "19時", "20時", "21時", "22時", "23時"]
     @IBOutlet weak var tableview: UITableView!
     
+    var scheduleForThisMonth = [DateWithSchedule]()
+    var timing = 0
+    
+    
+    
+    let maxNotification = 30
+    
+    
+    
     //ピッカービュー
     private var pickerView:UIPickerView!
     private let pickerViewHeight:CGFloat = 160
@@ -41,7 +50,6 @@ class SettingViewController: UIViewController {
                                                width:width,height:pickerViewHeight))
         pickerView.dataSource = self
         pickerView.delegate = self
-        pickerView.selectRow(2, inComponent: 0, animated: true)
         self.view.addSubview(pickerView)
         
         //pickerToolbar
@@ -53,21 +61,96 @@ class SettingViewController: UIViewController {
 
     }
     
-    @IBAction func closeButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-
+    override func viewDidAppear(_ animated: Bool) {
+        self.scheduleForThisMonth = CalendarHelper.sched
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func closeButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
-    */
-
+    
+    @IBAction func updateNotification(_ sender: Any) {
+        var hasEmptyField = false
+        for i in tableview.visibleCells{
+            if i.detailTextLabel?.text == nil {
+                hasEmptyField = true
+            }
+        }
+        
+        if !hasEmptyField {
+            
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.alert]) {
+                (granted, error) in
+            }
+            
+            for i in 0...maxNotification {
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [String(i)])
+            }
+            
+            for (index, i) in self.scheduleForThisMonth.enumerated() {
+                //content
+                let content = UNMutableNotificationContent()
+                var garbageString = ""
+                for (indexj, j) in i.garbage.enumerated() {
+                    garbageString += CalendarHelper().getGarbageTypeString(garbage: GarbageType(rawValue: j)!)!
+                    if indexj < i.garbage.count-1 {
+                        garbageString += "と"
+                    }
+                }
+                content.title = "ゴミ出しの時間です。"
+                content.body =  garbageString + "の日です"
+                print(content.body)
+                //content
+                
+                //trigger
+                if tableview.cellForRow(at: IndexPath(row: 0, section: 0))?.detailTextLabel?.text == "前日"{
+                    timing = -1
+                } else if tableview.cellForRow(at: IndexPath(row: 1, section: 0))?.detailTextLabel?.text == "前日" {
+                    timing = 0
+                }
+                print("timing " ,timing)
+                var dateComponent = i.dateComponents
+                print(dateComponent)
+                let tempDate = componentToDate(dateComponent: dateComponent)
+                let nextDate = Calendar.current.date(byAdding: .day, value: timing, to: tempDate!)
+                dateComponent = dateToComponent(date: nextDate!)
+                let whatTime = Int((tableview.cellForRow(at: IndexPath(row: 1, section: 0))?.detailTextLabel?.text)!.dropLast())
+                print ("time", whatTime)
+                dateComponent.setValue(whatTime!, for: .hour)
+                print(dateComponent)
+                let dateComponent2 = DateComponents(month:dateComponent.month,day: dateComponent.day,hour: dateComponent.hour)
+                print("ttt",dateComponent2)
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent2, repeats: false)
+                //trigger
+                
+                //uuid
+                let uuid = String(index)
+                //uuid
+                
+                //request
+                let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
+                //request
+                
+                center.add(request){
+                    (error) in
+                }
+            }
+            let dialog = UIAlertController(title: "登録しました", message: "今月分の通知を登録しました", preferredStyle: .alert)
+            dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(dialog, animated: true, completion: nil)
+        }
+    }
+    private func dateToComponent(date: Date) -> DateComponents{
+        let components = Calendar.current.dateComponents(in: TimeZone.current, from: date)
+        return components
+    }
+    
+    private func componentToDate(dateComponent: DateComponents) -> Date? {
+        var tempComponent = dateComponent
+        tempComponent.calendar = Calendar.current
+        return tempComponent.date
+    }
 }
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
