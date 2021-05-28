@@ -135,25 +135,10 @@ class SettingViewController: UIViewController {
                 center.add(request){
                     (error) in
                 }
-                
             }
-            
-            
-            
-            
-//
-//            let uuid = "monthly"
-//
-//            let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
-//
-//            center.add(request){
-//                (error) in
-//            }
-            
-            
-            
-            
-            
+            let dialog = UIAlertController(title: "登録しました", message: "今月分の通知を登録しました", preferredStyle: .alert)
+            dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(dialog, animated: true, completion: nil)
         }
     }
     private func dateToComponent(date: Date) -> DateComponents{
