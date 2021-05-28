@@ -72,7 +72,9 @@ class ViewController: UIViewController {
     }
     
     func setCellsView() {
-        let width = (collectionView.frame.size.width - 2)/8
+        let width = ((collectionView.frame.size.width - 51)/7)
+        print("width", width)
+        
         let height = (collectionView.frame.size.height - 2)/8
         
         let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
