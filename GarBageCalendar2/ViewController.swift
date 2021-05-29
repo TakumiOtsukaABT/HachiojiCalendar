@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var settingButton: UIButton!
     
     var pickerView = UIPickerView()
-    let list = ["地区1", "地区2","地区3","地区4","地区5","地区6","地区7","地区8","地区9","地区10","地区11","地区12","地区13","地区14"]
+    let list = ["地区1", "地区2","地区3","地区4","地区5","地区6","地区7","地区8","地区9","地区10","地区11","地区12","地区13","地区14","地区15"]
     var district = 0
     
     let userDefaults = UserDefaults.standard
