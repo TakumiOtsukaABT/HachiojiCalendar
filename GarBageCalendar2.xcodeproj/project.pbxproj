@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -92,7 +92,6 @@
 				6D0F775900176FC820B1BF53 /* Pods-GarBageCalendar2.debug.xcconfig */,
 				D2C4DC6CCE3F761C8C797C7B /* Pods-GarBageCalendar2.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
