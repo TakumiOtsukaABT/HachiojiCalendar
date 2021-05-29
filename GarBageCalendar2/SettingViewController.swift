@@ -38,6 +38,8 @@ class SettingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableview.tableFooterView = UIView()
+        
         userDefaults.register(defaults: ["DataStore": "default"])
         // Do any additional setup after loading the view.
         
