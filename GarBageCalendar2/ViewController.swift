@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 import UserNotifications
 
 class ViewController: UIViewController {
@@ -17,6 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var dateDiscription: UILabel!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var settingButton: UIButton!
+    @IBOutlet weak var bannerView: GADBannerView!
     
     var pickerView = UIPickerView()
     let list = ["地区1", "地区2","地区3","地区4","地区5","地区6","地区7","地区8","地区9","地区10","地区11","地区12","地区13","地区14","地区15","地区16","地区17","地区18","地区19"]
@@ -34,10 +36,17 @@ class ViewController: UIViewController {
     var cycleIndex:Int = 0
     var calendar = Calendar.current
     var todaycell = CalendarCell()
-
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"//TODO also plist
+        bannerView.load(GADRequest())
+        bannerView.backgroundColor = .secondarySystemBackground
+        
+        bannerView.rootViewController = self
+        bannerView.delegate = self
+
+        
         pickerDidLoad()
         // Do any additional setup after loading the view.
         setCellsView()
@@ -314,6 +323,32 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
     @objc func done() {
         self.textField.endEditing(true)
+    }
+}
+
+extension ViewController: GADBannerViewDelegate {
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+      print("bannerViewDidReceiveAd")
+    }
+
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+      print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+
+    func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+      print("bannerViewDidRecordImpression")
+    }
+
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+      print("bannerViewWillPresentScreen")
+    }
+
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+      print("bannerViewWillDIsmissScreen")
+    }
+
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+      print("bannerViewDidDismissScreen")
     }
 }
 

@@ -8,5 +8,7 @@ target 'GarBageCalendar2' do
   # Pods for GarBageCalendar2
   pod 'LayoutHelper'
 
+  pod 'Google-Mobile-Ads-SDK' 
+
 
 end
