@@ -39,7 +39,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"//TODO also plist
+        //TODO: also plist
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         bannerView.load(GADRequest())
         bannerView.backgroundColor = .secondarySystemBackground
         
