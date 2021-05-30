@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class SettingViewController: UIViewController {
     
@@ -35,9 +36,25 @@ class SettingViewController: UIViewController {
     private let toolbarHeight:CGFloat = 40.0
     
     private var pickerIndexPath:IndexPath!
+    
+    private var interstitial: GADInterstitialAd?
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let request = GADRequest()
+            GADInterstitialAd.load(withAdUnitID:"ca-app-pub-3940256099942544/4411468910",
+                                        request: request,
+                              completionHandler: { [self] ad, error in
+                                if let error = error {
+                                  print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                                  return
+                                }
+                                interstitial = ad
+                                interstitial?.fullScreenContentDelegate = self
+                              }
+            )
+        
         tableview.tableFooterView = UIView()
         
         userDefaults.register(defaults: ["DataStore": "default"])
@@ -72,6 +89,15 @@ class SettingViewController: UIViewController {
     }
     
     @IBAction func updateNotification(_ sender: Any) {
+
+        if interstitial != nil {
+            interstitial!.present(fromRootViewController: self)
+        } else {
+          print("Ad wasn't ready")
+        }
+        
+        print("continuing")
+        
         var hasEmptyField = false
         for i in tableview.visibleCells{
             if i.detailTextLabel?.text == nil {
@@ -102,7 +128,7 @@ class SettingViewController: UIViewController {
                 }
                 content.title = "ゴミ出しの時間です。"
                 content.body =  garbageString + "の日です"
-                print(content.body)
+//                print(content.body)
                 //content
                 
                 //trigger
@@ -111,18 +137,18 @@ class SettingViewController: UIViewController {
                 } else if tableview.cellForRow(at: IndexPath(row: 1, section: 0))?.detailTextLabel?.text == "前日" {
                     timing = 0
                 }
-                print("timing " ,timing)
+//                print("timing " ,timing)
                 var dateComponent = i.dateComponents
-                print(dateComponent)
+//                print(dateComponent)
                 let tempDate = componentToDate(dateComponent: dateComponent)
                 let nextDate = Calendar.current.date(byAdding: .day, value: timing, to: tempDate!)
                 dateComponent = dateToComponent(date: nextDate!)
                 let whatTime = Int((tableview.cellForRow(at: IndexPath(row: 1, section: 0))?.detailTextLabel?.text)!.dropLast())
-                print ("time", whatTime)
+//                print ("time", whatTime)
                 dateComponent.setValue(whatTime!, for: .hour)
-                print(dateComponent)
+//                print(dateComponent)
                 let dateComponent2 = DateComponents(month:dateComponent.month,day: dateComponent.day,hour: dateComponent.hour)
-                print("ttt",dateComponent2)
+//                print("ttt",dateComponent2)
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent2, repeats: false)
                 //trigger
                 
@@ -140,6 +166,7 @@ class SettingViewController: UIViewController {
             }
             let dialog = UIAlertController(title: "登録しました", message: "今月分の通知を登録しました", preferredStyle: .alert)
             dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            print("present")
             self.present(dialog, animated: true, completion: nil)
         }
     }
@@ -287,4 +314,26 @@ extension SettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         self.tableview.deselectRow(at: pickerIndexPath, animated: true)
     }
     
+}
+
+extension SettingViewController: GADFullScreenContentDelegate {
+    /// Tells the delegate that the ad failed to present full screen content.
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+      print("Ad did fail to present full screen content.")
+    }
+
+    /// Tells the delegate that the ad presented full screen content.
+    func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+      print("Ad did present full screen content.")
+    }
+
+    /// Tells the delegate that the ad dismissed full screen content.
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did dismiss full screen content.")
+        print("ttttttttttt")
+        let dialog = UIAlertController(title: "登録しました", message: "今月分の通知を登録しました", preferredStyle: .alert)
+        dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        print("present")
+        self.present(dialog, animated: true, completion: nil)
+    }
 }
