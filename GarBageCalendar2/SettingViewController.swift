@@ -151,6 +151,8 @@ class SettingViewController: UIViewController {
 //                print("ttt",dateComponent2)
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent2, repeats: false)
                 //trigger
+                print("tttt")
+                print(trigger)
                 
                 //uuid
                 let uuid = String(index)
@@ -164,9 +166,9 @@ class SettingViewController: UIViewController {
                     (error) in
                 }
             }
-            let dialog = UIAlertController(title: "登録しました", message: "今月分の通知を登録しました", preferredStyle: .alert)
+            let notifyMonth = CalendarHelper.sched[4].dateComponents.month
+            let dialog = UIAlertController(title: "登録しました", message: "\(String(describing: notifyMonth!))月分の通知を登録しました", preferredStyle: .alert)
             dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            print("present")
             self.present(dialog, animated: true, completion: nil)
         }
     }
@@ -238,8 +240,16 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                                            width:self.view.frame.width,height:self.pickerViewHeight)
         }
         self.pickerView.selectRow(index1,inComponent:0,animated:false)
-
-
+        let newLabelsIndex = self.pickerView.selectedRow(inComponent: 0)
+        let newLabel = pickerView(pickerView,titleForRow: newLabelsIndex,forComponent: 0)
+        tableview.cellForRow(at: indexPath)?.detailTextLabel?.text = newLabel
+        var key = ""
+        if indexPath.row == 0 {
+            key = "todayOrNot"
+        } else {
+            key = "hour"
+        }
+        userDefaults.set(newLabel, forKey: key)
     }
     
     
@@ -330,7 +340,6 @@ extension SettingViewController: GADFullScreenContentDelegate {
     /// Tells the delegate that the ad dismissed full screen content.
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         print("Ad did dismiss full screen content.")
-        print("ttttttttttt")
         let dialog = UIAlertController(title: "登録しました", message: "今月分の通知を登録しました", preferredStyle: .alert)
         dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         print("present")
