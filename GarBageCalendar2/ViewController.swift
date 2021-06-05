@@ -56,6 +56,13 @@ class ViewController: UIViewController {
         self.textField.text = list[district]
     }
     
+    @IBAction func onClickTextField(_ sender: Any) {
+        let dialog = UIAlertController(title: "地区の選択", message: "お手持ちのゴミ出しカレンダーに記載の地区であることを確認してください。", preferredStyle: .alert)
+        dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        print("present")
+        self.present(dialog, animated: true, completion: nil)
+        
+    }
     override func viewDidAppear(_ animated: Bool) {
         
         let center = UNUserNotificationCenter.current()
