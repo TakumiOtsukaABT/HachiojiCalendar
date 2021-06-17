@@ -50,7 +50,6 @@ class ViewController: UIViewController {
         
         pickerDidLoad()
         // Do any additional setup after loading the view.
-        setCellsView()
         setMonthView()
         self.district = userDefaults.integer(forKey: "rowInt")
         self.textField.text = list[district]
@@ -86,16 +85,6 @@ class ViewController: UIViewController {
         center.add(request){
             (error) in
         }
-    }
-    
-    func setCellsView() {
-        let width = ((collectionView.frame.size.width - 51)/7)
-        print("width", width)
-        
-        let height = (collectionView.frame.size.height - 2)/8
-        
-        let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        flowLayout.itemSize = CGSize(width: width, height: height)
     }
     
     func setMonthView() {
@@ -144,39 +133,6 @@ class ViewController: UIViewController {
     override open var shouldAutorotate: Bool {
         return false
     }
-    
-    
-//    private func initImageView(indexPath:IndexPath) {
-//        // UIImage インスタンスの生成
-//        let image1:UIImage = UIImage(named:"gomibukuro_blue")!
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calCell", for: indexPath) as! CalendarCell
-//
-//        // UIImageView 初期化
-//        let imageView = UIImageView(image:image1)
-//
-//        // スクリーンの縦横サイズを取得
-//        let screenWidth:CGFloat = cell.cellView.frame.size.width
-//        let screenHeight:CGFloat = cell.cellView.frame.size.height
-//
-//        // 画像の縦横サイズを取得
-//        let imgWidth:CGFloat = image1.size.width
-//        let imgHeight:CGFloat = image1.size.height
-//
-//        // 画像サイズをスクリーン幅に合わせる
-//        let scale:CGFloat = (screenWidth / imgWidth)/7
-//        let rect:CGRect =
-//            CGRect(x:20, y:20, width:imgWidth*scale, height:imgHeight*scale)
-//
-//        // ImageView frame をCGRectで作った矩形に合わせる
-//        imageView.frame = rect;
-//
-//        // 画像の中心を画面の中心に設定
-//        imageView.center = CGPoint(x:screenWidth/2, y:screenHeight/2)
-//
-//        // UIImageViewのインスタンスをビューに追加
-//        cell.cellView.addSubview(imageView)
-//        self.view.addSubview(imageView)
-//    }
 }
 
 extension UIImage {
@@ -196,11 +152,22 @@ extension UIImage {
     }
 }
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         totalSquares.count
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let yourWidth = collectionView.bounds.width/8.0
+        let yourHeight = yourWidth
+        return CGSize(width: yourWidth, height: yourHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        let yourWidth = collectionView.bounds.width/9.0
+                return CGFloat(yourWidth/6)
+        }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calCell", for: indexPath) as! CalendarCell
