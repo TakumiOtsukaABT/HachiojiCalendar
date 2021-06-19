@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		02CF9E337B5E9E0061EA320E /* Pods_GarBageCalendar2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCA8D1AA8F62B2EE78221B5 /* Pods_GarBageCalendar2.framework */; };
+		42180470267DE53000C619C7 /* onBoarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4218046F267DE53000C619C7 /* onBoarding.storyboard */; };
+		42180473267DF57300C619C7 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42180472267DF57300C619C7 /* PageViewController.swift */; };
+		42180478267DF9D600C619C7 /* onBoardingPage1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42180477267DF9D600C619C7 /* onBoardingPage1.swift */; };
+		4218047C267DF9F500C619C7 /* onBoardingPage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4218047B267DF9F500C619C7 /* onBoardingPage2.swift */; };
 		422EE651265A9F2900735D0A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EE650265A9F2900735D0A /* SettingViewController.swift */; };
 		4251D4AC26510BD600436CE2 /* DistrictCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4251D4AB26510BD600436CE2 /* DistrictCycle.swift */; };
 		42766A3E264FE81300C59A41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42766A3D264FE81300C59A41 /* AppDelegate.swift */; };
@@ -23,6 +27,10 @@
 
 /* Begin PBXFileReference section */
 		1FCA8D1AA8F62B2EE78221B5 /* Pods_GarBageCalendar2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GarBageCalendar2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4218046F267DE53000C619C7 /* onBoarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = onBoarding.storyboard; sourceTree = "<group>"; };
+		42180472267DF57300C619C7 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		42180477267DF9D600C619C7 /* onBoardingPage1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onBoardingPage1.swift; sourceTree = "<group>"; };
+		4218047B267DF9F500C619C7 /* onBoardingPage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onBoardingPage2.swift; sourceTree = "<group>"; };
 		422EE650265A9F2900735D0A /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		4251D4AB26510BD600436CE2 /* DistrictCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictCycle.swift; sourceTree = "<group>"; };
 		42766A3A264FE81300C59A41 /* GarBageCalendar2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GarBageCalendar2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +61,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42180476267DF98B00C619C7 /* onBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				42180477267DF9D600C619C7 /* onBoardingPage1.swift */,
+				4218047B267DF9F500C619C7 /* onBoardingPage2.swift */,
+			);
+			path = onBoarding;
+			sourceTree = "<group>";
+		};
 		42766A31264FE81300C59A41 = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +97,9 @@
 				42766A41264FE81300C59A41 /* ViewController.swift */,
 				42766A552650077400C59A41 /* CalendarHelper.swift */,
 				42766A52264FF30700C59A41 /* CalendarCell.swift */,
+				42180472267DF57300C619C7 /* PageViewController.swift */,
+				42180476267DF98B00C619C7 /* onBoarding */,
+				4218046F267DE53000C619C7 /* onBoarding.storyboard */,
 				42766A43264FE81300C59A41 /* Main.storyboard */,
 				42766A46264FE81600C59A41 /* Assets.xcassets */,
 				42766A48264FE81600C59A41 /* LaunchScreen.storyboard */,
@@ -169,6 +189,7 @@
 				42766A4A264FE81600C59A41 /* LaunchScreen.storyboard in Resources */,
 				42766A47264FE81600C59A41 /* Assets.xcassets in Resources */,
 				42766A45264FE81300C59A41 /* Main.storyboard in Resources */,
+				42180470267DE53000C619C7 /* onBoarding.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,13 +242,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4218047C267DF9F500C619C7 /* onBoardingPage2.swift in Sources */,
 				4251D4AC26510BD600436CE2 /* DistrictCycle.swift in Sources */,
 				42766A562650077400C59A41 /* CalendarHelper.swift in Sources */,
 				42766A42264FE81300C59A41 /* ViewController.swift in Sources */,
 				42766A3E264FE81300C59A41 /* AppDelegate.swift in Sources */,
+				42180478267DF9D600C619C7 /* onBoardingPage1.swift in Sources */,
 				42766A40264FE81300C59A41 /* SceneDelegate.swift in Sources */,
 				422EE651265A9F2900735D0A /* SettingViewController.swift in Sources */,
 				42766A53264FF30700C59A41 /* CalendarCell.swift in Sources */,
+				42180473267DF57300C619C7 /* PageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

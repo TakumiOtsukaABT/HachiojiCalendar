@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="j6n-ev-bw4">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--onBoardingPage1-->
+        <scene sceneID="fwr-zb-8mS">
+            <objects>
+                <viewController storyboardIdentifier="Page1" title="onBoardingPage1" id="zR9-jB-cMg" customClass="OnboardingPage1ViewController" customModule="GarBageCalendar2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PDj-EK-iC1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding1" translatesAutoresizingMaskIntoConstraints="NO" id="pGb-ss-6sz">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Opo-gc-J9f">
+                                <rect key="frame" x="322" y="74" width="62" height="30"/>
+                                <state key="normal" title="スキップ"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4p-e4-Mgi">
+                                <rect key="frame" x="340" y="763" width="54" height="49"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="41"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="qF8-mP-KOk"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="pGb-ss-6sz" secondAttribute="bottom" id="0GG-xm-ihS"/>
+                            <constraint firstItem="pGb-ss-6sz" firstAttribute="leading" secondItem="qF8-mP-KOk" secondAttribute="leading" id="6Vc-8j-ZRr"/>
+                            <constraint firstItem="Opo-gc-J9f" firstAttribute="top" secondItem="qF8-mP-KOk" secondAttribute="top" constant="30" id="6yM-sS-SvY"/>
+                            <constraint firstItem="qF8-mP-KOk" firstAttribute="bottom" secondItem="g4p-e4-Mgi" secondAttribute="bottom" constant="50" id="DJE-Tr-vBc"/>
+                            <constraint firstItem="qF8-mP-KOk" firstAttribute="trailing" secondItem="pGb-ss-6sz" secondAttribute="trailing" id="Fvx-y7-deO"/>
+                            <constraint firstItem="pGb-ss-6sz" firstAttribute="top" secondItem="qF8-mP-KOk" secondAttribute="top" id="cuv-15-Bqn"/>
+                            <constraint firstItem="qF8-mP-KOk" firstAttribute="trailing" secondItem="Opo-gc-J9f" secondAttribute="trailing" constant="30" id="qvt-bC-G2O"/>
+                            <constraint firstItem="qF8-mP-KOk" firstAttribute="trailing" secondItem="g4p-e4-Mgi" secondAttribute="trailing" constant="20" id="yoG-qv-EyE"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yl5-3A-QUc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2.8985507246376816" y="47.544642857142854"/>
+        </scene>
+        <!--onBoardingPage2-->
+        <scene sceneID="RLf-Is-SNc">
+            <objects>
+                <viewController storyboardIdentifier="Page2" title="onBoardingPage2" id="d9y-Cq-ZDA" customClass="OnboardingPage2ViewController" customModule="GarBageCalendar2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RX2-87-oon">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding2" translatesAutoresizingMaskIntoConstraints="NO" id="D1i-Rq-tTp">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TrS-4E-5kO">
+                                <rect key="frame" x="322" y="74" width="62" height="30"/>
+                                <state key="normal" title="スキップ"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2/2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0u-sR-W21">
+                                <rect key="frame" x="20" y="763" width="59" height="49"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="41"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uFp-db-Px1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="d0u-sR-W21" firstAttribute="leading" secondItem="uFp-db-Px1" secondAttribute="leading" constant="20" id="NmL-ML-9cu"/>
+                            <constraint firstItem="uFp-db-Px1" firstAttribute="bottom" secondItem="d0u-sR-W21" secondAttribute="bottom" constant="50" id="Pn6-x1-8Rl"/>
+                            <constraint firstItem="D1i-Rq-tTp" firstAttribute="leading" secondItem="uFp-db-Px1" secondAttribute="leading" id="ZdL-4H-GUT"/>
+                            <constraint firstItem="TrS-4E-5kO" firstAttribute="top" secondItem="uFp-db-Px1" secondAttribute="top" constant="30" id="dx3-DT-khR"/>
+                            <constraint firstItem="D1i-Rq-tTp" firstAttribute="top" secondItem="uFp-db-Px1" secondAttribute="top" id="twA-iR-PYN"/>
+                            <constraint firstItem="uFp-db-Px1" firstAttribute="trailing" secondItem="D1i-Rq-tTp" secondAttribute="trailing" id="uel-P9-JQe"/>
+                            <constraint firstAttribute="bottom" secondItem="D1i-Rq-tTp" secondAttribute="bottom" id="v1k-Mj-Rwf"/>
+                            <constraint firstItem="uFp-db-Px1" firstAttribute="trailing" secondItem="TrS-4E-5kO" secondAttribute="trailing" constant="30" id="yix-dh-NrS"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FWK-K8-grU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="678" y="48"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="8wD-Mh-gGJ">
+            <objects>
+                <pageViewController storyboardIdentifier="Page0" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="j6n-ev-bw4" customClass="PageViewController" customModule="GarBageCalendar2" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2yk-sZ-DT7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1461" y="239"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="onboarding1" width="1080" height="1920"/>
+        <image name="onboarding2" width="1080" height="1920"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
