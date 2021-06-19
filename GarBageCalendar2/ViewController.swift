@@ -275,9 +275,11 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         pickerView.delegate = self
         pickerView.dataSource = self
         let toolbar = UIToolbar(frame: CGRectMake(0, 0, 0, 35))
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ViewController.done))
+        let doneItem = UIBarButtonItem(title: "完了", style: .plain, target: self, action: #selector(ViewController.done))
         let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(ViewController.cancel))
-        toolbar.setItems([cancelItem, doneItem], animated: true)
+        let searchDistrictItem = UIBarButtonItem(title: "自分の地区を探す", style: .plain, target: self, action: #selector(ViewController.searchDistrict))
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolbar.setItems([cancelItem, searchDistrictItem, flexible, doneItem], animated: true)
         self.textField.inputView = pickerView
         self.textField.inputAccessoryView = toolbar
     }
@@ -308,6 +310,14 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     @objc func cancel() {
         self.textField.text = ""
         self.textField.endEditing(true)
+    }
+    
+    @objc func searchDistrict() {
+        self.textField.endEditing(true)
+        let url = URL(string: "https://www.city.hachioji.tokyo.jp/kurashi/gomi/kateiyougomi_karenda/001/index.html")!
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
     }
 
     @objc func done() {
