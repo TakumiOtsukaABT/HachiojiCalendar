@@ -23,6 +23,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Opo-gc-J9f">
                                 <rect key="frame" x="322" y="74" width="62" height="30"/>
                                 <state key="normal" title="スキップ"/>
+                                <connections>
+                                    <action selector="skipAction:" destination="zR9-jB-cMg" eventType="touchUpInside" id="4az-TI-Q4t"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4p-e4-Mgi">
                                 <rect key="frame" x="340" y="763" width="54" height="49"/>
@@ -44,6 +47,9 @@
                             <constraint firstItem="qF8-mP-KOk" firstAttribute="trailing" secondItem="g4p-e4-Mgi" secondAttribute="trailing" constant="20" id="yoG-qv-EyE"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="skip" destination="Opo-gc-J9f" id="sCj-gN-cPC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yl5-3A-QUc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -63,6 +69,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TrS-4E-5kO">
                                 <rect key="frame" x="322" y="74" width="62" height="30"/>
                                 <state key="normal" title="スキップ"/>
+                                <connections>
+                                    <action selector="skipAction:" destination="d9y-Cq-ZDA" eventType="touchUpInside" id="pcE-I1-AOc"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2/2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0u-sR-W21">
                                 <rect key="frame" x="20" y="763" width="59" height="49"/>
