@@ -25,6 +25,8 @@ class ViewController: UIViewController {
     var district = 0
     
     let userDefaults = UserDefaults.standard
+    
+    var todaysIndex:Int = 0
 
     public var schedulesThisMonth = [DateWithSchedule]()
     var completionHandler:()
@@ -111,7 +113,18 @@ class ViewController: UIViewController {
         monthLabel.text = CalendarHelper().monthJapaneseString(date: selectedDate)
         self.schedulesThisMonth.removeAll()
         collectionView.reloadData()
-        
+        collectionView.performBatchUpdates(nil, completion: {
+            (result) in
+            // ready
+            if self.selectedDate.get(.month)==Date().get(.month) {
+                for (index,i) in self.totalSquares.enumerated(){
+                    if Int(i) == Date().get(.day){
+                        self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: index, section: 0))
+                        self.todaysIndex = index
+                    }
+                }
+            }
+        })
     }
     
     @IBAction func previousMonth(_ sender: Any) {
@@ -241,6 +254,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.collectionView(collectionView, didDeselectItemAt: IndexPath(row: todaysIndex, section: 0))
         collectionView.cellForItem(at: indexPath)!.viewWithTag(3)?.backgroundColor = .yellow
         let cell = collectionView.cellForItem(at: indexPath) as! CalendarCell
         dateDiscription.text = ""
@@ -334,5 +348,15 @@ class DateWithSchedule {
     init(dateComponent:DateComponents, garbage: [Int]) {
         self.dateComponents = dateComponent
         self.garbage = garbage
+    }
+}
+
+extension Date {
+    func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
+        return calendar.dateComponents(Set(components), from: self)
+    }
+
+    func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+        return calendar.component(component, from: self)
     }
 }
