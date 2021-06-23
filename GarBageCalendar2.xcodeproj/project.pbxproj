@@ -33,7 +33,7 @@
 		4218047B267DF9F500C619C7 /* onBoardingPage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onBoardingPage2.swift; sourceTree = "<group>"; };
 		422EE650265A9F2900735D0A /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		4251D4AB26510BD600436CE2 /* DistrictCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictCycle.swift; sourceTree = "<group>"; };
-		42766A3A264FE81300C59A41 /* 八王子市ゴミ出し通知.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "八王子市ゴミ出し通知.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42766A3A264FE81300C59A41 /* GarBageCalendar2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GarBageCalendar2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42766A3D264FE81300C59A41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42766A3F264FE81300C59A41 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		42766A41264FE81300C59A41 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 		42766A3B264FE81300C59A41 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				42766A3A264FE81300C59A41 /* 八王子市ゴミ出し通知.app */,
+				42766A3A264FE81300C59A41 /* GarBageCalendar2.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,7 +146,7 @@
 			);
 			name = GarBageCalendar2;
 			productName = GarBageCalendar2;
-			productReference = 42766A3A264FE81300C59A41 /* 八王子市ゴミ出し通知.app */;
+			productReference = 42766A3A264FE81300C59A41 /* GarBageCalendar2.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -410,7 +410,7 @@
 				);
 				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TakumiOtsuka.HachiojiCalendar2;
-				PRODUCT_NAME = "八王子市ゴミ出し通知";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -433,7 +433,7 @@
 				);
 				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TakumiOtsuka.HachiojiCalendar2;
-				PRODUCT_NAME = "八王子市ゴミ出し通知";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
