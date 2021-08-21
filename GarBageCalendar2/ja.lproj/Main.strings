@@ -1,0 +1,36 @@
+
+/* Class = "UILabel"; text = "月"; ObjectID = "3Eg-gV-Y32"; */
+"3Eg-gV-Y32.text" = "月";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "9hQ-eV-8O1"; */
+"9hQ-eV-8O1.title" = "Settings";
+
+/* Class = "UILabel"; text = "日"; ObjectID = "DF2-CT-Npn"; */
+"DF2-CT-Npn.text" = "日";
+
+/* Class = "UILabel"; text = "水"; ObjectID = "LF5-bb-0qT"; */
+"LF5-bb-0qT.text" = "水";
+
+/* Class = "UIBarButtonItem"; title = "今月の通知を設定"; ObjectID = "W0d-Pn-hnU"; */
+"W0d-Pn-hnU.title" = "今月の通知を設定";
+
+/* Class = "UILabel"; text = "金"; ObjectID = "aAk-kG-oQe"; */
+"aAk-kG-oQe.text" = "金";
+
+/* Class = "UIBarButtonItem"; title = "close"; ObjectID = "bfu-d4-Rza"; */
+"bfu-d4-Rza.title" = "close";
+
+/* Class = "UILabel"; text = "土"; ObjectID = "e7g-p7-rAV"; */
+"e7g-p7-rAV.text" = "土";
+
+/* Class = "UILabel"; text = "木"; ObjectID = "ga7-Z7-tnV"; */
+"ga7-Z7-tnV.text" = "木";
+
+/* Class = "UILabel"; text = "31"; ObjectID = "o4e-ip-I1h"; */
+"o4e-ip-I1h.text" = "31";
+
+/* Class = "UILabel"; text = "火"; ObjectID = "qiQ-2S-ycM"; */
+"qiQ-2S-ycM.text" = "火";
+
+/* Class = "UILabel"; text = "Feb 2021"; ObjectID = "voQ-cg-guS"; */
+"voQ-cg-guS.text" = "Feb 2021";

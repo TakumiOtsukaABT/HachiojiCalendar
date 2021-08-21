@@ -340,7 +340,8 @@ extension SettingViewController: GADFullScreenContentDelegate {
     /// Tells the delegate that the ad dismissed full screen content.
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         print("Ad did dismiss full screen content.")
-        let dialog = UIAlertController(title: "登録しました", message: "今月分の通知を登録しました", preferredStyle: .alert)
+        let notifyMonth = CalendarHelper.sched[4].dateComponents.month
+        let dialog = UIAlertController(title: "登録しました", message: "\(String(describing: notifyMonth!))月分の通知を登録しました", preferredStyle: .alert)
         dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         print("present")
         self.present(dialog, animated: true, completion: nil)

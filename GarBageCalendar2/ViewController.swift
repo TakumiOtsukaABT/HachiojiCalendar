@@ -49,12 +49,11 @@ class ViewController: UIViewController {
         bannerView.rootViewController = self
         bannerView.delegate = self
 
-        
+        self.district = userDefaults.integer(forKey: "rowInt")
+        self.textField.text = list[district]
         pickerDidLoad()
         // Do any additional setup after loading the view.
         setMonthView()
-        self.district = userDefaults.integer(forKey: "rowInt")
-        self.textField.text = list[district]
     }
     
     @IBAction func onClickTextField(_ sender: Any) {
