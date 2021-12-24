@@ -91,7 +91,6 @@ class ViewController: UIViewController {
     func setMonthView() {
         totalSquares.removeAll()
         
-        
         let daysInMonth = CalendarHelper().daysInMonth(date: selectedDate)
         let firstDayOfMonth = CalendarHelper().firstOfMonth(date: selectedDate)
         let startingSpaces = CalendarHelper().weekDay(date: firstDayOfMonth)

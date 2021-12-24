@@ -17,27 +17,42 @@ class CalendarHelper
     
     func plusMonth(date: Date) -> Date {
         let year = 2021
+        let month = 3
         let next = calendar.date(byAdding: .month, value: 1, to: date)!
         let components = calendar.dateComponents([.year], from: next)
+        let monthcomponents = calendar.dateComponents([.month], from: next)
         if year == components.year {
             return next
+        }else if month >= monthcomponents.month!{
+            return next
         }
-        return calendar.date(byAdding: .month, value: 0, to: date)!        
+        return calendar.date(byAdding: .month, value: 0, to: date)!
     }
     
     func minusMonth(date: Date) -> Date {
         let year = 2021
+        let month = 3
         let previous = calendar.date(byAdding: .month, value: -1, to: date)!
         let components = calendar.dateComponents([.year], from: previous)
+        let monthcomponents = calendar.dateComponents([.month], from: previous)
         if year == components.year {
+            return previous
+        }else if month >= monthcomponents.month!{
             return previous
         }
         return calendar.date(byAdding: .month, value: 0, to: date)!
     }
     
     func getSeason(date:Date) -> Int {
+        let year = 2021
+
         let components = calendar.dateComponents([.month], from: date)
-        return (components.month!-1)/3
+        let yearcomponents = calendar.dateComponents([.year], from: date)
+        if year == yearcomponents.year{
+            return (components.month!-1)/3
+        } else {
+            return 4
+        }
     }
     
     func garbageTypeString(typeInt: GarbageType) -> String? {
