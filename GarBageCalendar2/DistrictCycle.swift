@@ -463,4 +463,6 @@ enum GarbageType:Int{
     case yuugai = 9
     case newspaper = 10
     case magazine = 11
+    case paperPack = 12
+    case branch = 13
 }

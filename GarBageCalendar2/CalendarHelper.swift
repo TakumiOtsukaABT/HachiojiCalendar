@@ -81,6 +81,10 @@ class CalendarHelper
             return "newspaper"
         case .magazine:
             return "magazine"
+        case .paperPack:
+            return "paperPack"
+        case .branch:
+            return "branch"
         }
     }
     
@@ -109,7 +113,11 @@ class CalendarHelper
         case .newspaper:
             return "新聞紙"
         case .magazine:
-            return "雑誌・雑紙・紙パック"
+            return "雑誌・雑紙"
+        case .paperPack:
+            return "紙パック"
+        case .branch:
+            return "木の枝"
         }
     }
     
