@@ -16,7 +16,7 @@ class CalendarHelper
     var calendar = Calendar.current
     
     func plusMonth(date: Date) -> Date {
-        let year = 2021
+        let year = 2022
         let month = 3
         let next = calendar.date(byAdding: .month, value: 1, to: date)!
         let components = calendar.dateComponents([.year], from: next)
@@ -30,7 +30,7 @@ class CalendarHelper
     }
     
     func minusMonth(date: Date) -> Date {
-        let year = 2021
+        let year = 2022
         let month = 3
         let previous = calendar.date(byAdding: .month, value: -1, to: date)!
         let components = calendar.dateComponents([.year], from: previous)
@@ -44,7 +44,7 @@ class CalendarHelper
     }
     
     func getSeason(date:Date) -> Int {
-        let year = 2021
+        let year = 2022
 
         let components = calendar.dateComponents([.month], from: date)
         let yearcomponents = calendar.dateComponents([.year], from: date)
