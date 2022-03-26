@@ -197,7 +197,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         dateDiscription.text = ""
         
         if totalSquares[indexPath.item] != "" {
-            for (index, i) in calendarCycle.district1[district][season][cycleIndex % 2][indexPath.item % 7].enumerated() {
+            for (index, i) in calendarCycle.district1[district][season][cycleIndex % 4][indexPath.item % 7].enumerated() {
                 let name = CalendarHelper().garbageTypeString(typeInt: GarbageType(rawValue: i)!)
                 if name != nil {
                     let imageV = UIImageView()
